@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
                     TextView textView = (TextView) findViewById(R.id.textView);
                     textView.setText(next);
 
-                    TextView waitView = (TextView) findViewById(R.id.textView2);
+                    TextView waitView = (TextView) findViewById(R.id.textView3);
                     waitView.setText(wait + " 分後");
 
 
