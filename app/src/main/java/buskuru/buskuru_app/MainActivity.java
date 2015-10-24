@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -54,6 +56,12 @@ public class MainActivity extends ActionBarActivity {
                     HttpResponse httpResponse = httpClient.execute(httpGet);
                     String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
                     Log.d("HTTP", str); // とりあえずログに表示
+                    //strから次目的地を抽出
+                    JSONObject json = new JSONObject(str);
+                    String next = json.getString("next");
+                    TextView textView = (TextView) findViewById(R.id.textView1);
+                    textView.setText(next);
+
                 } catch(Exception ex) {
                     System.out.println(ex);
                 }
