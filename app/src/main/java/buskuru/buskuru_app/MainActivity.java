@@ -2,8 +2,16 @@ package buskuru.buskuru_app;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -34,4 +42,24 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // HTTPボタン押下
+    public void onBtnHttpClicked(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpGet httpGet = new HttpGet("http://192.168.0.103:8080/buskuru/");
+                    HttpResponse httpResponse = httpClient.execute(httpGet);
+                    String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+                    Log.d("HTTP", str); // とりあえずログに表示
+                } catch(Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        }).start();
+    }
+
+
 }
