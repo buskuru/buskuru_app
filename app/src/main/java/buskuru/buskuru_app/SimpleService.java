@@ -93,15 +93,16 @@ public class SimpleService extends Service {
                     //strから次目的地を抽出
                     JSONObject json = new JSONObject(str);
                     String next = json.getString("next");
+                    String wait = json.getString("wait");
 
 //                    mHandler.post(new DisplayToast("もうすぐバスが来ますよ！" + count));
 
-                    mHandler.post(new DisplayToast("今バスは " + next + " にいます！ "));
-
+                    mHandler.post(new DisplayToast("今バスは " + next + " にいます！" +
+                            "あと " + wait + " 分後に到着予定です。"));
 
                     Intent broadcastIntent = new Intent();
                     broadcastIntent.putExtra(
-                            "message", next);
+                            "message", str);
                     broadcastIntent.setAction("MY_ACTION");
                     getBaseContext().sendBroadcast(broadcastIntent);
 

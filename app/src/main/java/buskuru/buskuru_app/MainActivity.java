@@ -35,8 +35,21 @@ public class MainActivity extends ActionBarActivity {
                 Bundle bundle = intent.getExtras();
                 String message = bundle.getString("message");
 
-                TextView textView = (TextView) findViewById(R.id.textView1);
-                textView.setText(message);
+                try {
+                    JSONObject json = new JSONObject(message);
+                    String next = json.getString("next");
+                    String wait = json.getString("wait");
+
+                    TextView textView = (TextView) findViewById(R.id.textView);
+                    textView.setText(next);
+
+                    TextView waitView = (TextView) findViewById(R.id.textView2);
+                    waitView.setText(wait + " 分後");
+
+
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
         }, intentFilter);
 
@@ -78,7 +91,7 @@ public class MainActivity extends ActionBarActivity {
                     //次目的地の表示
                     JSONObject json = new JSONObject(str);
                     String next = json.getString("next");
-                    TextView textView = (TextView) findViewById(R.id.textView1);
+                    TextView textView = (TextView) findViewById(R.id.textView);
                     textView.setText(next);
 
                 } catch (Exception ex) {
