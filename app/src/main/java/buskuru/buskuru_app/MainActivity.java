@@ -55,8 +55,8 @@ public class MainActivity extends ActionBarActivity {
                     HttpGet httpGet = new HttpGet("http://192.168.0.103:8080/buskuru/");
                     HttpResponse httpResponse = httpClient.execute(httpGet);
                     String str = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
-                    Log.d("HTTP", str); // とりあえずログに表示
-                    //strから次目的地を抽出
+                    Log.d("HTTP", str); // ログに表示
+                    //次目的地の表示
                     JSONObject json = new JSONObject(str);
                     String next = json.getString("next");
                     TextView textView = (TextView) findViewById(R.id.textView1);
