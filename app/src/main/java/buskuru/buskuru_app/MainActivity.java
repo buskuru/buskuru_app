@@ -1,5 +1,9 @@
 package buskuru.buskuru_app;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,11 +20,26 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
+    IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("MY_ACTION");
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle bundle = intent.getExtras();
+                String message = bundle.getString("message");
+
+                TextView textView = (TextView) findViewById(R.id.textView1);
+                textView.setText(message);
+            }
+        }, intentFilter);
+
     }
 
     @Override
@@ -62,11 +81,28 @@ public class MainActivity extends ActionBarActivity {
                     TextView textView = (TextView) findViewById(R.id.textView1);
                     textView.setText(next);
 
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     System.out.println(ex);
                 }
             }
         }).start();
+    }
+
+
+    /*
+ * サービス開始ボタン
+ */
+    public void onStartClick(View view) {
+        Intent i = new Intent(this, SimpleService.class);
+        startService(i);
+    }
+
+    /*
+     * サービス停止ボタン
+     */
+    public void onStopClick(View view) {
+        Intent i = new Intent(this, SimpleService.class);
+        stopService(i);
     }
 
 
